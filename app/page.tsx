@@ -1,37 +1,13 @@
 import { DotPattern } from "@/components/magicui/dot-pattern";
 import { cn } from "@/lib/utils";
-import { SanityDocument } from "next-sanity";
-import { client } from "./sanity/client";
-import { ChevronRight } from "lucide-react";
-import { AnimatedGradientText } from "@/components/magicui/animated-gradient-text";
-const HERO_QUERY = `*[_type == "home"]`;
+import Hero from "@/components/HomeComponents/hero";
+import ProductsView from "@/components/HomeComponents/products-view";
 
-const options = { next: { revalidate: 1 } };
 export default async function Home() {
-  const hero = await client.fetch<SanityDocument[]>(HERO_QUERY, {}, options);
-
   return (
-    <div className="m-20 flex justify-center">
-      {hero.map((item, index) => (
-        <div key={index} className="">
-          <h1 className="z-10 whitespace-pre-wrap text-center text-5xl font-medium tracking-tighter text-black dark:text-white">
-            {item.hero.title}
-          </h1>
-          <div className=" z-10 flex min-h-20 items-center justify-center">
-            <AnimatedGradientText>
-              🎉 <hr className="mx-2 h-4 w-px shrink-0 bg-gray-300" />{" "}
-              <span
-                className={cn(
-                  `inline animate-gradient bg-gradient-to-r from-[#ffaa40] via-[#9c40ff] to-[#ffaa40] bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent`
-                )}
-              >
-                {item.hero.description}
-              </span>
-              <ChevronRight className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
-            </AnimatedGradientText>
-          </div>
-        </div>
-      ))}
+    <div className="m-20  justify-center">
+      <Hero />
+      <ProductsView />
       <DotPattern
         width={20}
         height={20}
