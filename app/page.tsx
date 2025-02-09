@@ -2,10 +2,8 @@ import { DotPattern } from "@/components/magicui/dot-pattern";
 import { cn } from "@/lib/utils";
 import { SanityDocument } from "next-sanity";
 import { client } from "./sanity/client";
-import { SparklesText } from "@/components/magicui/sparkles-text";
 import { ChevronRight } from "lucide-react";
 import { AnimatedGradientText } from "@/components/magicui/animated-gradient-text";
-import { AuroraText } from "@/components/magicui/aurora-text";
 const HERO_QUERY = `*[_type == "home"]`;
 
 const options = { next: { revalidate: 1 } };
