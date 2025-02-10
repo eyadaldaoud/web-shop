@@ -18,6 +18,7 @@ export default async function Hero() {
           <h1 className="z-10 whitespace-pre-wrap text-center text-5xl font-medium tracking-tighter text-black dark:text-white">
             {item?.title}
           </h1>
+          <p className={cn(`text-center mt-4`)}>{item?.linktitle}</p>
           <div className=" z-10 flex min-h-20 items-center justify-center">
             <AnimatedGradientText>
               🎉 <hr className="mx-2 h-4 w-px shrink-0 bg-gray-300" />{" "}
@@ -26,7 +27,7 @@ export default async function Hero() {
                   `inline animate-gradient bg-gradient-to-r from-[#ffaa40] via-[#9c40ff] to-[#ffaa40] bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent`
                 )}
               >
-                {item?.description}
+                {item?.linktitle}
               </span>
               <ChevronRight className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
             </AnimatedGradientText>

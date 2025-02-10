@@ -1,16 +1,16 @@
 export default async function ProductsView() {
-  const data = await fetch("https://fakestoreapi.com/products")
+  const data = await fetch("https://api.escuelajs.co/api/v1/products")
     .then((res) => res.json())
     .then((json) => json);
+  console.log(data);
   return (
     <div className="mt-20 relative flex h-[300px] w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-background">
       <Marquee pauseOnHover className="[--duration:40s]">
         {data.map((item: any, index: number) => (
           <ReviewCard
             key={index}
-            {...item}
-            name={item.title}
-            img={item.image}
+            title={item.title}
+            img={item.category.image}
           />
         ))}
       </Marquee>
@@ -26,14 +26,12 @@ import Image from "next/image";
 
 const ReviewCard = ({
   img,
-  name,
-  username,
-  body,
+  title,
+  description,
 }: {
   img: string;
-  name: string;
-  username: string;
-  body: string;
+  title: string;
+  description: string;
 }) => {
   return (
     <figure
@@ -45,16 +43,15 @@ const ReviewCard = ({
         "dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]"
       )}
     >
-      <div className="flex justify-center items-center text-center">
-        <Image className="rounded" width={300} height={100} alt="" src={img} />
+      <div className="flex justify-center items-center text-center h-40">
+        <Image className="rounded" width={300} height={20} alt="" src={img} />
       </div>
       <div className="flex flex-col">
         <figcaption className="text-sm font-medium dark:text-white">
-          {name}
+          {title}
         </figcaption>
-        <p className="text-xs font-medium dark:text-white/40">{username}</p>
       </div>
-      <blockquote className="mt-2 text-sm">{body}</blockquote>
+      <blockquote className="mt-2 text-sm">{description}</blockquote>
     </figure>
   );
 };

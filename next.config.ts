@@ -3,7 +3,9 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
 
   images: {
-    domains: ["fakestoreapi.com"],
+
+
+    domains: [ "i.imgur.com","pravatar.cc",],
   }
 };
 
