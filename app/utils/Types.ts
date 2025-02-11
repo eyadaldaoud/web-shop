@@ -3,3 +3,8 @@ export interface ThemeType  {
     dark: string;
     system: string;
 }
+
+export interface NavItem {
+    title: string;
+    link: string;
+}

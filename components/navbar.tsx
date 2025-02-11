@@ -3,36 +3,39 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { client } from "@/app/sanity/client";
 import { SanityDocument } from "next-sanity";
+import { MobileMenu } from "./mobile-menu";
 const NAV_QUERY = `*[_type == "navitems"] | order(_createdAt asc)`;
 export async function Navbar() {
   const NavItems = await client.fetch<SanityDocument[]>(NAV_QUERY, {});
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between p-4 bg-background">
-      <Button variant="outline" className="hidden md:inline-flex">
-        Login
-      </Button>
-      <div className="md:hidden">
-        <ThemeToggle />
-      </div>
-      <ul className="flex space-x-4">
-        {NavItems.map((item, index) => (
-          <li key={index}>
-            <Link
-              href={item.link}
-              className="text-foreground hover:text-primary"
-            >
-              {item.title}
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center">
+            <Link href="/" className="text-xl font-bold text-foreground">
+              Logo
             </Link>
-          </li>
-        ))}
-      </ul>
-      <div className="flex items-center space-x-2">
-        <Button variant="outline" className="md:hidden">
-          Login
-        </Button>
-        <div className="hidden md:block">
-          <ThemeToggle />
+          </div>
+
+          <div className="hidden md:flex items-center space-x-4">
+            {NavItems.map((item, index) => (
+              <Link
+                key={index}
+                href={item.link}
+                className="text-foreground hover:text-primary"
+              >
+                {item.title}
+              </Link>
+            ))}
+          </div>
+
+          <div className="hidden md:flex items-center space-x-4">
+            <Button variant="outline">Login</Button>
+            <ThemeToggle />
+          </div>
+
+          <MobileMenu NavItems={NavItems} />
         </div>
       </div>
     </nav>
