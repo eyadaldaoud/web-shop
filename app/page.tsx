@@ -7,7 +7,8 @@ export default async function Home() {
   return (
     <div className="m-20  justify-center">
       <Hero />
-      <h1>Discover</h1>
+      <h1 className="text-center text-5xl mt-20">Discover</h1>
+      <ProductsView />
       {/* <ProductsView /> */}
       <DotPattern
         width={20}

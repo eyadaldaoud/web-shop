@@ -5,7 +5,9 @@ const nextConfig: NextConfig = {
   images: {
 
 
-    domains: [ "i.imgur.com","pravatar.cc",],
+    domains: [ 
+      "fakestoreapi.com",
+    ],
   }
 };
 
