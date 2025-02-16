@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { client } from "@/app/sanity/client";
 import { SanityDocument } from "next-sanity";
 import { MobileMenu } from "./mobile-menu";
+import CartClient from "./cart-client";
 const NAV_QUERY = `*[_type == "navitems"] | order(_createdAt asc)`;
 export async function Navbar() {
   const NavItems = await client.fetch<SanityDocument[]>(NAV_QUERY, {});
@@ -31,7 +32,7 @@ export async function Navbar() {
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="outline">Login</Button>
+            <CartClient />
             <ThemeToggle />
           </div>
 
