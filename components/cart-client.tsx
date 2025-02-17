@@ -28,19 +28,12 @@ export default function CartClient() {
         <span className="sr-only">Shopping cart</span>
         <AnimatePresence>
           {cartItemCount > 0 && (
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0 }}
-              transition={{ type: "spring", stiffness: 500, damping: 30 }}
+            <Badge
+              variant="destructive"
+              className="absolute -top-2 -right-2 px-2 py-1 text-xs"
             >
-              <Badge
-                variant="destructive"
-                className="absolute -top-2 -right-2 px-2 py-1 text-xs"
-              >
-                {cartItemCount}
-              </Badge>
-            </motion.div>
+              {cartItemCount}
+            </Badge>
           )}
         </AnimatePresence>
       </Button>

@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
 import { removeFromCart, updateQuantity } from "@/app/features/cartSlice";
 import { RootState } from "@/app/store";
+import { urlFor } from "@/app/sanity/client";
 
 interface CartOverlayProps {
   isOpen: boolean;
@@ -75,7 +76,7 @@ export function CartOverlay({ isOpen, onClose }: CartOverlayProps) {
               <>
                 {cartItems.map((item: any) => (
                   <motion.div
-                    key={item.id}
+                    key={item._id}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 20 }}
@@ -84,7 +85,10 @@ export function CartOverlay({ isOpen, onClose }: CartOverlayProps) {
                   >
                     <div className="flex items-center space-x-4">
                       <Image
-                        src={item.image || "/placeholder.svg"}
+                        src={
+                          urlFor(item.image)?.width(550).height(310).url() ||
+                          "/placeholder.svg"
+                        }
                         alt="3"
                         width={60}
                         height={60}
@@ -105,7 +109,7 @@ export function CartOverlay({ isOpen, onClose }: CartOverlayProps) {
                         onChange={(e) =>
                           dispatch(
                             updateQuantity({
-                              id: item.id,
+                              _id: item._id,
                               quantity: Number.parseInt(e.target.value),
                             })
                           )
@@ -114,7 +118,7 @@ export function CartOverlay({ isOpen, onClose }: CartOverlayProps) {
                       />
                       <Button
                         variant="destructive"
-                        onClick={() => dispatch(removeFromCart(item.id))}
+                        onClick={() => dispatch(removeFromCart(item._id))}
                       >
                         Remove
                       </Button>

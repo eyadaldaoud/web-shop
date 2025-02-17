@@ -14,8 +14,8 @@ import Image from "next/image";
 import { ProductFilterBar } from "./product-filter-bar";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../features/cartSlice";
-import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { urlFor } from "../sanity/client";
 
 export default function ProductsView({ products }: any) {
   const dispatch = useDispatch();
@@ -23,47 +23,45 @@ export default function ProductsView({ products }: any) {
 
   const handleAddToCart = (item: any) => {
     dispatch(addToCart(item));
-    setAddedItems([...addedItems, item.id]);
-    setTimeout(() => {
-      setAddedItems(addedItems.filter((id) => id !== item.id));
-    }, 500);
+    setAddedItems([...addedItems, item._id]);
+
+    // setAddedItems(addedItems.filter((id) => id !== item._id));
   };
   return (
     <div>
       <ProductFilterBar />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {products.map((Item: any, index: number) => (
+        {products?.map((item: any, index: number) => (
           <Card
             key={index}
-            className="relative max-w-md min-h-[470px] shadow-none"
+            className="relative max-w-md min-h-[200px] shadow-none"
           >
-            \{" "}
             <CardHeader>
-              <Lens defaultPosition={{ x: 260, y: 150 }}>
+              <Lens>
                 <Image
-                  src={Item.image}
+                  src={urlFor(item.image)?.width(550).height(310).url() || ""}
                   alt="image placeholder"
-                  width={500}
-                  height={500}
-                  className="h-60"
+                  width={800}
+                  height={600}
+                  className="w-full h-full"
                 />
               </Lens>
             </CardHeader>
             <CardContent>
-              <CardTitle className="text-1xl h-16">
-                {Item.title.slice(0, 60)}
+              <CardTitle className="md:text-1xl text-sm sm:overflow-hidden  overflow-y-scroll overflow-x-hidden h-16">
+                {item?.title?.slice(0, 60)}
               </CardTitle>
               <CardDescription>
-                <Button variant="secondary">{Item.price.toFixed(2)}$</Button>
+                <Button variant="secondary">{item.price.toFixed(2)}$</Button>
               </CardDescription>
             </CardContent>
             <CardFooter className="w-full">
               <InteractiveHoverButton
-                onClick={() => handleAddToCart(Item)}
+                onClick={() => handleAddToCart(item)}
                 className="w-full text-center"
               >
-                {addedItems.includes(Item.id) ? "Added" : "Add to cart"}
+                {addedItems.includes(item._id) ? "Added" : "Add to cart"}
               </InteractiveHoverButton>
             </CardFooter>
           </Card>

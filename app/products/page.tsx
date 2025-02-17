@@ -1,18 +1,20 @@
+import { SanityDocument } from "next-sanity";
 import ProductsView from "./ProductsView";
+import { client } from "../sanity/client";
 
 export default async function Page() {
-  const products = await new Promise((resolve) =>
-    setTimeout(
-      () =>
-        resolve(
-          fetch("https://fakestoreapi.com/products").then((res) => res.json())
-        ),
-      500
-    )
+  const PRODUCTS_QUERY = `*[_type == "product"]`;
+  const options = { next: { revalidate: 3 } };
+  const Products = await client.fetch<SanityDocument[]>(
+    PRODUCTS_QUERY,
+    {},
+    options
   );
+
+  console.log(Products);
   return (
     <div className="m-20  justify-center">
-      <ProductsView products={products} />
+      <ProductsView products={Products} />
     </div>
   );
 }

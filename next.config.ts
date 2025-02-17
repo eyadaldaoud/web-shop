@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
 
     domains: [ 
       "fakestoreapi.com",
+      "cdn.sanity.io"
     ],
   }
 };
