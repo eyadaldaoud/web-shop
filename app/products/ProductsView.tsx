@@ -16,16 +16,19 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../features/cartSlice";
 import { useState } from "react";
 import { urlFor } from "../sanity/client";
+import Router from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function ProductsView({ products }: any) {
   const dispatch = useDispatch();
   const [addedItems, setAddedItems] = useState<number[]>([]);
-
+  const router = useRouter();
   const handleAddToCart = (item: any) => {
     dispatch(addToCart(item));
     setAddedItems([...addedItems, item._id]);
-
-    // setAddedItems(addedItems.filter((id) => id !== item._id));
+    setTimeout(() => {
+      setAddedItems(addedItems.filter((id) => id !== item._id));
+    }, 500);
   };
   return (
     <div>
@@ -37,14 +40,16 @@ export default function ProductsView({ products }: any) {
             key={index}
             className="relative max-w-md min-h-[200px] shadow-none"
           >
-            <CardHeader>
+            <CardHeader
+              onClick={() => router.push("/products/" + item.slug.current)}
+            >
               <Lens>
                 <Image
-                  src={urlFor(item.image)?.width(550).height(310).url() || ""}
+                  src={urlFor(item.image)?.width(1920).height(1080).url() || ""}
                   alt="image placeholder"
-                  width={800}
-                  height={600}
-                  className="w-full h-full"
+                  width={1920}
+                  height={1080}
+                  className="w-full h-full object-cover"
                 />
               </Lens>
             </CardHeader>
