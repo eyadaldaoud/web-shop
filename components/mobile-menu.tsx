@@ -6,13 +6,20 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { NavItem } from "@/app/utils/Types";
+import CartClient from "./cart-client";
 
 export function MobileMenu({ NavItems }: { NavItems: any }) {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
     <div className="md:hidden">
-      <Button variant="ghost" size="icon" onClick={() => setIsOpen(!isOpen)}>
+      <CartClient />
+      <Button
+        variant="ghost"
+        className="ml-2"
+        size="icon"
+        onClick={() => setIsOpen(!isOpen)}
+      >
         {isOpen ? <X /> : <Menu />}
       </Button>
       {isOpen && (

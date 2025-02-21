@@ -86,8 +86,10 @@ export function CartOverlay({ isOpen, onClose }: CartOverlayProps) {
                     <div className="flex items-center space-x-4">
                       <Image
                         src={
-                          urlFor(item.image)?.width(550).height(310).url() ||
-                          "/placeholder.svg"
+                          urlFor(item.images[0].asset)
+                            ?.width(550)
+                            .height(310)
+                            .url() || "/placeholder.svg"
                         }
                         alt="3"
                         width={60}
