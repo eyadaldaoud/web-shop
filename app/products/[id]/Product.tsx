@@ -13,6 +13,7 @@ export default function Product({ product }: any) {
   const [selectedImage, setSelectedImage] = useState(0);
   const dispatch = useDispatch();
   const [addedItems, setAddedItems] = useState<number[]>([]);
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
   const handleAddToCart = (item: any) => {
     dispatch(addToCart(item));
@@ -23,30 +24,36 @@ export default function Product({ product }: any) {
   };
 
   return (
-    <div className="m-4 md:m-20 flex justify-center flex-col lg:flex-row">
-      <div className="flex flex-col items-center lg:items-start lg:flex-row gap-4">
-        <div className="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto lg:max-h-96 w-full lg:w-auto order-2 lg:order-1">
-          {product.images.map((image: any, index: number) => (
-            <button
-              key={index}
-              onClick={() => setSelectedImage(index)}
-              className={`relative w-16 h-16 flex-shrink-0 rounded-md overflow-hidden ${
-                selectedImage === index ? "ring-2 ring-primary" : ""
-              }`}
+    <div className="container mx-auto px-4 py-8">
+      {/* For mobile, center items; on desktop, align items to the start */}
+      <div className="flex flex-col lg:flex-row gap-8 items-center lg:items-start">
+        {/* Image & Thumbnails Section */}
+        <div className="flex flex-col lg:flex-row gap-4 flex-1 lg:items-start">
+          {/* Thumbnails Container */}
+          <div className="flex flex-row lg:flex-col gap-2 w-full lg:w-auto overflow-x-auto lg:overflow-y-auto flex-nowrap no-scrollbar">
+            {product.images.map((image: any, index: number) => (
+              <button
+                key={index}
+                onClick={() => setSelectedImage(index)}
+                className={`relative w-16 h-16 flex-shrink-0 rounded-md overflow-hidden ${
+                  selectedImage === index ? "border-2 border-blue-800" : ""
+                }`}
+              >
+                <Image
+                  src={urlFor(image.asset)?.width(100).height(100).url() || ""}
+                  fill
+                  className="object-cover"
+                  alt={`${product.name} thumbnail ${index + 1}`}
+                />
+              </button>
+            ))}
+          </div>
+          {/* Main Image Container */}
+          <div className="flex-grow">
+            <ShineBorder
+              className="relative w-full aspect-square lg:max-w-lg rounded-lg"
+              color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
             >
-              <Image
-                src={urlFor(image.asset)?.width(100).height(100).url() || ""}
-                layout="fill"
-                objectFit="cover"
-                alt={`${product.name} thumbnail ${index + 1}`}
-              />
-            </button>
-          ))}
-        </div>
-        <div className="order-1 lg:order-2 w-full lg:w-auto">
-          <ShineBorder
-            className="relative w-full h-[300px] md:h-[400px] lg:w-96 lg:h-96 rounded-lg"
-            children={
               <AnimatePresence mode="wait">
                 <motion.div
                   key={selectedImage}
@@ -54,7 +61,7 @@ export default function Product({ product }: any) {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="w-full h-full"
+                  className="relative w-full h-full"
                 >
                   <Image
                     src={
@@ -63,31 +70,37 @@ export default function Product({ product }: any) {
                         .height(1080)
                         .url() || ""
                     }
-                    layout="fill"
-                    objectFit="none"
+                    fill
+                    className="object-contain rounded-lg"
                     alt={product.name}
-                    className="rounded-lg"
                   />
                 </motion.div>
               </AnimatePresence>
-            }
-            color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
-          />
+            </ShineBorder>
+          </div>
         </div>
-      </div>
-      <div className="flex justify-center lg:justify-start mt-8 lg:mt-0 lg:ml-8">
-        <div className="max-w-md w-full text-center lg:text-start">
-          <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
-          <p className="text-lg mb-4">{product.description}</p>
-          <p className="text-lg font-semibold mb-4">
-            Price: ${product.price.toFixed(2)}
-          </p>
-          <ShinyButton
-            onClick={() => handleAddToCart(product)}
-            className="w-full text-center lg:w-[300px]"
-          >
-            {addedItems.includes(product._id) ? "Added" : "Add to cart"}
-          </ShinyButton>
+
+        {/* Product Details Section */}
+        <div className="flex flex-col justify-between flex-1 min-h-[400px]">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold mb-4">
+              {product.name}
+            </h1>
+            <div className="max-h-96 overflow-y-auto text-base md:text-lg mb-2">
+              {product.description}
+            </div>
+          </div>
+          <div className="mt-auto">
+            <p className="text-lg md:text-xl font-semibold mb-6">
+              Price: ${product.price.toFixed(2)}
+            </p>
+            <ShinyButton
+              onClick={() => handleAddToCart(product)}
+              className="w-full max-w-xs mx-auto lg:mx-0"
+            >
+              {addedItems.includes(product._id) ? "Added" : "Add to cart"}
+            </ShinyButton>
+          </div>
         </div>
       </div>
     </div>
