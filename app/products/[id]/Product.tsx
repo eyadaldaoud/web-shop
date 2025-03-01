@@ -13,7 +13,6 @@ export default function Product({ product }: any) {
   const [selectedImage, setSelectedImage] = useState(0);
   const dispatch = useDispatch();
   const [addedItems, setAddedItems] = useState<number[]>([]);
-  const [showFullDescription, setShowFullDescription] = useState(false);
 
   const handleAddToCart = (item: any) => {
     dispatch(addToCart(item));
@@ -61,7 +60,6 @@ export default function Product({ product }: any) {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="relative w-full h-full"
                 >
                   <Image
                     src={
@@ -71,7 +69,7 @@ export default function Product({ product }: any) {
                         .url() || ""
                     }
                     fill
-                    className="object-contain rounded-lg"
+                    className="rounded-lg"
                     alt={product.name}
                   />
                 </motion.div>
@@ -90,7 +88,7 @@ export default function Product({ product }: any) {
               {product.description}
             </div>
           </div>
-          <div className="mt-auto">
+          <div>
             <p className="text-lg md:text-xl font-semibold mb-6">
               Price: ${product.price.toFixed(2)}
             </p>

@@ -85,21 +85,26 @@ export default function ProductsView({ products }: any) {
               key={index}
               className="relative max-w-md min-h-[200px] shadow-none"
             >
-              <CardHeader onClick={() => router.push("/products/" + item._id)}>
-                <Lens>
-                  <Image
-                    src={
-                      urlFor(item.images[0].asset)
-                        ?.width(1920)
-                        .height(1080)
-                        .url() || ""
-                    }
-                    alt={item.name || "Product image"}
-                    width={1920}
-                    height={1080}
-                    className="w-full h-full object-cover"
-                  />
-                </Lens>
+              <CardHeader
+                className="h-64"
+                onClick={() => router.push("/products/" + item._id)}
+              >
+                <div className="w-full h-full overflow-hidden rounded-t-lg">
+                  <Lens>
+                    <Image
+                      src={
+                        urlFor(item.images[0].asset)
+                          ?.width(500)
+                          .height(500)
+                          .url() || ""
+                      }
+                      alt={item.name || "Product image"}
+                      width={500}
+                      height={500}
+                      className="w-full h-full object-contain" // Change from object-cover to object-contain
+                    />
+                  </Lens>
+                </div>
               </CardHeader>
               <CardContent>
                 <CardTitle className="md:text-1xl text-sm sm:overflow-hidden overflow-y-scroll overflow-x-hidden h-16">
