@@ -84,12 +84,12 @@ export default function Product({ product }: any) {
             <h1 className="text-2xl md:text-3xl font-bold mb-4">
               {product.name}
             </h1>
-            <div className="max-h-96 overflow-y-auto text-base md:text-lg mb-2">
+            <div className="h-[350px] overflow-y-auto text-base md:text-lg mb-2">
               {product.description}
             </div>
           </div>
           <div>
-            <p className="text-lg md:text-xl font-semibold mb-6">
+            <p className="text-lg md:text-xl font-semibold mb-6 border rounded w-fit px-4 py-2">
               Price: ${product.price.toFixed(2)}
             </p>
             <ShinyButton

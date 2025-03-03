@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../features/cartSlice";
 import { useState, useEffect } from "react";
 import { urlFor, client } from "../sanity/client";
@@ -28,6 +28,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Category } from "../utils/Types";
+import { RootState } from "../store";
 
 const PRODUCTS_QUERY = `*[_type == "category"]{
   _id,
@@ -41,6 +42,7 @@ export default function ProductsView({ products }: any) {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const router = useRouter();
+  const cartItems = useSelector((state: RootState) => state.cart.items);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -116,10 +118,19 @@ export default function ProductsView({ products }: any) {
               </CardContent>
               <CardFooter className="w-full">
                 <InteractiveHoverButton
-                  onClick={() => handleAddToCart(item)}
+                  onClick={() => {
+                    handleAddToCart(item);
+                  }}
+                  disabled={cartItems
+                    .map((item) => item._id)
+                    .includes(item._id)}
                   className="w-full text-center"
                 >
-                  {addedItems.includes(item._id) ? "Added" : "Add to cart"}
+                  {cartItems.map((item) => item._id).includes(item._id)
+                    ? "In Cart"
+                    : addedItems.includes(item._id)
+                      ? "Added"
+                      : "Add to cart"}
                 </InteractiveHoverButton>
               </CardFooter>
             </Card>
