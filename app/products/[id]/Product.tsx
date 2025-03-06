@@ -5,14 +5,16 @@ import { urlFor } from "@/app/sanity/client";
 import { ShineBorder } from "@/components/magicui/shine-border";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/app/features/cartSlice";
 import { ShinyButton } from "@/components/magicui/shiny-button";
+import { RootState } from "@/app/store";
 
 export default function Product({ product }: any) {
   const [selectedImage, setSelectedImage] = useState(0);
   const dispatch = useDispatch();
   const [addedItems, setAddedItems] = useState<number[]>([]);
+  const cartItems = useSelector((state: RootState) => state.cart.items);
 
   const handleAddToCart = (item: any) => {
     dispatch(addToCart(item));
@@ -95,8 +97,13 @@ export default function Product({ product }: any) {
             <ShinyButton
               onClick={() => handleAddToCart(product)}
               className="w-full max-w-xs mx-auto lg:mx-0"
+              disabled={cartItems.map((item) => item._id).includes(product._id)}
             >
-              {addedItems.includes(product._id) ? "Added" : "Add to cart"}
+              {cartItems.map((item: any) => item._id).includes(product._id)
+                ? "In Cart"
+                : addedItems.includes(product._id)
+                  ? "Added"
+                  : "Add to cart"}
             </ShinyButton>
           </div>
         </div>

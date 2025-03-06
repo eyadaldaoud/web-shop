@@ -5,6 +5,7 @@ import { client } from "@/app/sanity/client";
 import { SanityDocument } from "next-sanity";
 import { MobileMenu } from "./mobile-menu";
 import CartClient from "./cart-client";
+import { Shirt } from "lucide-react";
 const NAV_QUERY = `*[_type == "navitems"] | order(_createdAt asc)`;
 export async function Navbar() {
   const NavItems = await client.fetch<SanityDocument[]>(NAV_QUERY, {});
@@ -15,7 +16,7 @@ export async function Navbar() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="text-xl font-bold text-foreground">
-              Logo
+              <Shirt />
             </Link>
           </div>
 
